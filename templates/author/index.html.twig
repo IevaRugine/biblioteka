@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Authors List{% endblock %}
+
+{% block body %}
+    <h1>Authors in Library ✅</h1>
+    List order by:
+    <form action="{{ path('author_index')}}" method="GET">
+    <select name="sort">
+    <option value="default">default</option>
+    <option value="name_az"{% if sortBy=='name_az'%}selected{% endif %}>name</option>
+    <option value="name_za"{% if sortBy=='name_za'%}selected{% endif %}>name reverse</option>
+    <option value="surname_az"{% if sortBy=='surname_az'%}selected{% endif %}>surname</option>
+    <option value="surname_za"{% if sortBy=='surname_za'%}selected{% endif %}>surname reverse</option>
+    </select>
+    <button type="submit">Sort IT!</button>
+    </form>
+    <a href="{{ path('author_index')}}" >CLEAR</a>
+    <ul>
+    {% for author in authors %}
+        <li>
+        {{author.name}} {{author.surname}}
+        <a href="{{ path('author_edit', {id: author.id}) }}">EDIT</a>
+        <form action="{{ path('author_delete', {id: author.id}) }}" method="POST">
+        <button type="submit">DELETE</button>
+        </form>
+            {% for book in author.books %}
+            {{book.title}}<br>
+            {% endfor %}
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

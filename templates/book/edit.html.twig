@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit new Book{% endblock %}
+
+{% block body %}
+    <h1>Edit new Book ✅</h1>
+    <form action="{{path('book_update', {id: book.id})}}" method="POST">
+        Title:<input type="text" name="book_title" value="{{book.title}}">
+        ISBN:<input type="text" name="book_isbn" value="{{book.isbn}}">
+        Pages:<input type="text" name="book_pages" value="{{book.pages}}">
+        About:<textarea name="book_about">{{book.about}}</textarea>
+        <select name="books_author">
+        {% for author in authors %}
+        <option value="{{author.id}}" {% if author.id == book.authorId %} selected {% endif %}>
+        {{author.name}} {{author.surname}}
+        </option>
+        {% endfor %}
+        </select>
+        <button type="submit">Edit Book</button>
+    </form>
+{% endblock %}

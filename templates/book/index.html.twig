@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Books List{% endblock %}
+
+{% block body %}
+    <h1>Books in Library ✅</h1>
+    List filter by:
+        <form action="{{ path('book_index')}}" method="GET">
+            <select name="author_id">
+            <option value="0">View All</option>
+            {% for author in authors %}
+            <option value="{{author.id}}" {% if authorId == author.id %}selected{% endif %}>{{author.name}} {{author.surname}}</option>
+            {% endfor %}
+            </select>
+            <button type="submit">Filter IT!</button>
+        </form>
+    <a href="{{ path('book_index')}}">CLEAR</a>
+    <ul>
+    {% for book in books %}
+        <li>
+        {{book.title}} {{book.author.name}} {{book.author.surname}}
+        <a href="{{ path('book_edit', {id: book.id}) }}">EDIT</a>
+        <form action="{{ path('book_delete', {id: book.id}) }}" method="POST">
+        <button type="submit">DELETE</button>
+        </form>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}
