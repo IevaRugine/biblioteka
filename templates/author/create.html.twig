@@ -5,8 +5,9 @@
 {% block body %}
     <h1>Create new Author ✅</h1>
     <form action="{{path('author_store')}}" method="POST">
-        Name:<input type="text" name="author_name">
-        Surname:<input type="text" name="author_surname">
+        Name:<input type="text" name="author_name" value="{{author_name}}">
+        Surname:<input type="text" name="author_surname" value="{{author_surname}}">
         <button type="submit">Add new Author</button>
+        <input type="hidden" name="token" value="{{ csrf_token('toke_nas') }}"/>
     </form>
 {% endblock %}

@@ -9,8 +9,13 @@
     </head>
     <body>
     {% if errors is defined and errors|length > 0 %}
-    {% include 'errors/validation.html.twig' %}
+    {% include 'msg/validation.html.twig' %}
     {% endif %}
+
+    {% if success is defined and success|length > 0 %}
+    {% include 'msg/success.html.twig' %}
+    {% endif %}
+
         {% block body %}{% endblock %}
     </body>
 </html>

@@ -17,9 +17,11 @@ class BookController extends AbstractController
      */
     public function index(Request $r): Response
     {
+
         // $books = $this->getDoctrine()
         //     ->getRepository(Book::class)
         //     ->findAll();
+        
         $authors = $this->getDoctrine()
             ->getRepository(Author::class)
             ->findAll();
@@ -52,7 +54,7 @@ class BookController extends AbstractController
 
         $authors = $this->getDoctrine()
             ->getRepository(Author::class)
-            ->findAll();
+            ->findby([], ['surname' => 'asc']);
 
 
         return $this->render('book/create.html.twig', [
@@ -65,8 +67,6 @@ class BookController extends AbstractController
      */
     public function store(Request $r): Response
     {
-
-
 
 
         $author = $this->getDoctrine()
@@ -99,7 +99,7 @@ class BookController extends AbstractController
 
         $authors = $this->getDoctrine()
             ->getRepository(Author::class)
-            ->findAll();
+            ->findby([], ['surname' => 'asc']);
 
         return $this->render('book/edit.html.twig', [
             'book' => $book,
