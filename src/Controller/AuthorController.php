@@ -39,7 +39,8 @@ class AuthorController extends AbstractController
         return $this->render('author/index.html.twig', [
             'authors' => $authors,
             'sortBy' => $r->query->get('sort') ?? 'default',
-            'success' => $r->getSession()->getFlashBag()->get('success', [])
+            'success' => $r->getSession()->getFlashBag()->get('success', []),
+            'errors' => $r->getSession()->getFlashBag()->get('errors', [])
         ]);
     }
 
@@ -67,8 +68,7 @@ class AuthorController extends AbstractController
 
         $submittedToken = $r->request->get('token');
 
-
-        if ($this->isCsrfTokenValid('toke_nas', $submittedToken)) {
+        if (!$this->isCsrfTokenValid('create_author_bla', $submittedToken)) {
             $r->getSession()->getFlashBag()->add('errors', 'Blogas Tokenas CSRF');
             return $this->redirectToRoute('author_create');
         }
@@ -156,7 +156,7 @@ class AuthorController extends AbstractController
     /**
      * @Route("/author/delete/{id}", name="author_delete", methods={"POST"})
      */
-    public function delete($id): Response
+    public function delete(ValidatorInterface $validator, Request $r, $id): Response
     {
         $author = $this->getDoctrine()
             ->getRepository(Author::class)
@@ -164,13 +164,22 @@ class AuthorController extends AbstractController
 
         //dd($author->getBooks()->count());
 
-        if ($author->getBooks()->count() > 0) {
-            return new Response('Trinti negalima nes turi knygu');
-        }
+        // if ($author->getBooks()->count() > 0) {
+        //     return new Response('Trinti negalima nes turi knygų');
+        // }
+        $errors = $validator->validate($author);
+
+        if ($author->getBooks()->count() > 0) { 
+        $r->getSession()->getFlashBag()->add('errors', 'Trinti negalima, nes turi knygų');
+        return $this->redirectToRoute('author_index');
+    }
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($author);
         $entityManager->flush();
+
+
+        $r->getSession()->getFlashBag()->add('success', 'Autorius buvo sėkmingai ištrintas.');
 
         return $this->redirectToRoute('author_index');
     }

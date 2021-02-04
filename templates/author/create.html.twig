@@ -1,13 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Create new Author{% endblock %}
+{% block title %}Create new Author
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Author ✅</h1>
-    <form action="{{path('author_store')}}" method="POST">
-        Name:<input type="text" name="author_name" value="{{author_name}}">
-        Surname:<input type="text" name="author_surname" value="{{author_surname}}">
-        <button type="submit">Add new Author</button>
-        <input type="hidden" name="token" value="{{ csrf_token('toke_nas') }}"/>
-    </form>
-{% endblock %}
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<div class="card">
+					<div class="card-header">
+						<h1>Create new Author ✅</h1>
+					</div>
+					<div class="card-body">
+						<form action="{{path('author_store')}}" method="POST">
+							<div class="form-group">
+								<label>Name:</label>
+								<input type="text" class="form-control" name="author_name" value="{{author_name}}">
+								<small class="form-text text-muted">Author name.</small>
+							</div>
+
+							<div class="form-group">
+								<label>Surname:</label>
+								<input type="text" class="form-control" name="author_surname" value="{{author_surname}}">
+								<small class="form-text text-muted">Author name.</small>
+							</div>
+							<button type="submit" class="btn btn-primary">Add new Author</button>
+							<input type="hidden" name="token" value="{{ csrf_token('create_author_bla') }}"/>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>{% endblock %}

@@ -1,33 +1,66 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Authors List{% endblock %}
+{% block title %}Authors List
+{% endblock %}
 
 {% block body %}
-    <h1>Authors in Library ✅</h1>
-    List order by:
-    <form action="{{ path('author_index')}}" method="GET">
-    <select name="sort">
-    <option value="default">default</option>
-    <option value="name_az"{% if sortBy=='name_az'%}selected{% endif %}>name</option>
-    <option value="name_za"{% if sortBy=='name_za'%}selected{% endif %}>name reverse</option>
-    <option value="surname_az"{% if sortBy=='surname_az'%}selected{% endif %}>surname</option>
-    <option value="surname_za"{% if sortBy=='surname_za'%}selected{% endif %}>surname reverse</option>
-    </select>
-    <button type="submit">Sort IT!</button>
-    </form>
-    <a href="{{ path('author_index')}}" >CLEAR</a>
-    <ul>
-    {% for author in authors %}
-        <li>
-        {{author.name}} {{author.surname}}
-        <a href="{{ path('author_edit', {id: author.id}) }}">EDIT</a>
-        <form action="{{ path('author_delete', {id: author.id}) }}" method="POST">
-        <button type="submit">DELETE</button>
-        </form>
-            {% for book in author.books %}
-            {{book.title}}<br>
-            {% endfor %}
-        </li>
-    {% endfor %}
-    </ul>
+
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<div class="card">
+					<div class="card-header">
+						<h1>Authors in Library ✅</h1>
+					</div>
+					<div class="card-body">
+						List order by:
+
+						<form action="{{ path('author_index')}}" method="GET" class="sort-form	">
+							<div class="form-group">
+								<select name="sort" class="form-control">
+									<option value="default">default</option>
+									<option value="name_az" {% if sortBy=='name_az' %} selected {% endif %}>name</option>
+									<option value="name_za" {% if sortBy=='name_za' %} selected {% endif %}>name reverse</option>
+									<option value="surname_az" {% if sortBy=='surname_az' %} selected {% endif %}>surname</option>
+									<option value="surname_za" {% if sortBy=='surname_za' %} selected {% endif %}>surname reverse</option>
+								</select>
+							</div>
+							<button type="submit" class="btn btn-dark">Sort IT!</button>
+							<a href="{{ path('author_index')}}">CLEAR</a>
+						</form>
+						
+						<ul class="list-group">
+							{% for author in authors %}
+								<li class="list-group-item">
+									<div class="list-group-item__line">
+										<span>
+											{{author.name}}
+											{{author.surname}}
+										</span>
+										<div class="list-group-item__line__buttons">
+											<a href="{{ path('author_edit', {id: author.id}) }}" class="btn btn-success">EDIT</a>
+											<form action="{{ path('author_delete', {id: author.id}) }}" method="POST">
+												<button type="submit" class="btn btn-danger">DELETE</button>
+											</form>
+										</div>
+									</div>
+									<h4>
+										<span class="badge badge-secondary">Author books</span>
+									</h4>
+									<ul class="list-group">
+
+										{% for book in author.books %}
+											<li class="list-group-item">{{book.title}}</li>
+										{% endfor %}
+									</ul>
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 {% endblock %}

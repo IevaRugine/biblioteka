@@ -1,0 +1,38 @@
+@import "~bootstrap/scss/bootstrap";
+body {
+    background-color: lightgray;
+}
+
+.list-group-item {
+    &__line {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        span {
+            font-size: 24px;
+        }
+        &__buttons {
+            display: flex;
+            .btn {
+                margin: 7px;
+            }
+        }
+    }
+}
+
+.form-check-input.custom {
+    margin-left: 15px;
+}
+
+.form-check.custom {
+    padding-left: 0;
+}
+
+form.sort-form {
+    display: flex;
+    align-content: center;
+    button {
+        height: 38px;
+        margin: 0 10px;
+    }
+}

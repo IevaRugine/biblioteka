@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\BookRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=BookRepository::class)
@@ -19,21 +20,31 @@ class Book
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Vardas negali buti tuscias")
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 64,
+     *      minMessage = "Pavadinimas per trumpas. Turi buti bent {{ limit }} raidės",
+     *      maxMessage = "Pavadinimas per ilgas. Telpa tik {{ limit }} raidės"
+     * )
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=20)
+     * @Assert\Positive(message="Įveskite isbn numerį")
      */
     private $isbn;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Positive(message="Įveskite puslapių skaičių")
      */
     private $pages;
 
     /**
      * @ORM\Column(type="text")
+ 
      */
     private $about;
 

@@ -1,6 +1,13 @@
-<h3>Va tokios tai klaidos</h3>
-<ul>
-{% for error in errors %}
-    <li>{{ error }}</li>
-{% endfor %}
-</ul>
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-md-9">
+			<div class="alert">
+				<ul class="list-group">
+					{% for error in errors %}
+					<li class="list-group-item list-group-item-danger">{{ error }}</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
